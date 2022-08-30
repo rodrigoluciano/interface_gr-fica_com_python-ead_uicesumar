@@ -10,7 +10,7 @@ class Login(QDialog):
         loadUi("login.ui", self)
         self.loginbutton.clicked.connect(self.login_function)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
-        # self.createactbutton.clicked.connect(self.gotocreate)
+        self.createsignupactbutton.clicked.connect(self.gotocreate)
 
     def login_function(self):
         email = self.email.text()
@@ -18,22 +18,26 @@ class Login(QDialog):
         print("sucessfull loged in email: ", email, "and password:", password)
 
     def gotocreate(self):
-        createac = CreateAc()
+        createac = CreateAct()
         widget.addWidget(createac)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-
-class CreateAc(QDialog):
+class CreateAct(QDialog):
     def __init__(self):
-        super(CreateAc, self).__init__()
-        loadUi("createact.ui")
-        self.signupbutton.clicked.connected(self.createacfunction)
+        super(CreateAct, self).__init__()
+        loadUi("createact.ui",self)
+        self.signupbutton.clicked.connect(self.createactfunction)
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.confirmpass.setEchoMode(QtWidgets.QLineEdit.Password)
 
-    def createacfunction(self):
+    def createactfunction(self):
         email = self.email.text()
         if self.password.text() == self.confirmpass.text():
-            password = self.password
+            password = self.password.text()
             print("Successfuly create act with email", email, "and password: ", password)
+            login = Login()
+            widget.addWidget(login)
+            widget.setCurrentIndex(widget.currentIndex()+1)
 
 
 app = QApplication(sys.argv)
